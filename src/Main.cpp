@@ -1,10 +1,19 @@
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
+#include "Game.hpp"
+
+Game *game;
 
 int main(int argc, char* argv[]) {
-    std::cout << "SDL Works" << std::endl;
-    std::cin.get();
+    game = new Game();
+    game->init("Flying Shroom", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, false);
+
+    while (game->running()) {
+        game->handleEvents();
+        game->update();
+        game->clear();
+        game->display();
+    }
+
+    game->clean();
 
     return 0;
 }
