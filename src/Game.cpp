@@ -3,6 +3,8 @@
 Game::Game() {}
 Game::~Game() {}
 
+
+// Main Functions
 void Game::init(const char* title, int x, int y, int width, int height, bool fullScreen) {
     int flags = 0;
     if (fullScreen) {
@@ -53,4 +55,20 @@ void Game::clean() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_QUIT;
+}
+
+// Texture Manager Functions
+SDL_Texture* Game::LoadTexture(const char* filePath) {
+    SDL_Texture* tex = NULL;
+    tex = IMG_LoadTexture(renderer, filePath);
+
+    if (tex == NULL) {
+        std::cout << "Error. Couldn't load texture... Error: " << SDL_GetError() << std::endl;
+    }
+
+    return tex;
+}
+
+void Game::RenderTexture(SDL_Texture* tex) {
+    SDL_RenderCopy(renderer, tex, NULL, NULL);
 }

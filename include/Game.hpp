@@ -7,12 +7,17 @@ class Game {
         Game();
         ~Game();
 
+        // Main Functions
         void init(const char* title, int x, int y, int width, int height, bool fullScreen);
         void handleEvents();
         void update();
         void clear();
         void display();
         void clean();
+
+        // Texture Manager
+        SDL_Texture* LoadTexture(const char* filePath);
+        void RenderTexture(SDL_Texture* tex);
 
         // return functions
         bool running() { return isRunning; }
