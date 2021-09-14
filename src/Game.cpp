@@ -1,8 +1,11 @@
 #include "Game.hpp"
+#include "TextureManager.hpp"
+
+// Textures
+SDL_Texture* playerTex;
 
 Game::Game() {}
 Game::~Game() {}
-
 
 // Main Functions
 void Game::init(const char* title, int x, int y, int width, int height, bool fullScreen) {
@@ -28,6 +31,8 @@ void Game::init(const char* title, int x, int y, int width, int height, bool ful
     } else {
         isRunning = false;
     }
+
+    playerTex = TextureManager::LoadTexture("res/Shroom/Shroom.png", renderer);
 }
 
 void Game::handleEvents() {
@@ -43,6 +48,12 @@ void Game::handleEvents() {
 
 void Game::update() {}
 
+void Game::render() {
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, playerTex, NULL, NULL);
+    SDL_RenderPresent(renderer);
+}
+
 void Game::clear() {
     SDL_RenderClear(renderer);
 }
@@ -55,20 +66,4 @@ void Game::clean() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_QUIT;
-}
-
-// Texture Manager Functions
-SDL_Texture* Game::LoadTexture(const char* filePath) {
-    SDL_Texture* tex = NULL;
-    tex = IMG_LoadTexture(renderer, filePath);
-
-    if (tex == NULL) {
-        std::cout << "Error. Couldn't load texture... Error: " << SDL_GetError() << std::endl;
-    }
-
-    return tex;
-}
-
-void Game::RenderTexture(SDL_Texture* tex) {
-    SDL_RenderCopy(renderer, tex, NULL, NULL);
 }
